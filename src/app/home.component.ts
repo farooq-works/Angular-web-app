@@ -27,7 +27,7 @@ import { ContentItem, HeroSlide, SiteSection } from './models';
             <span class="flex flex-col leading-tight"><strong class="text-base font-extrabold tracking-tight text-ink">MFD Solutions</strong><span class="mt-1 text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-500">Design & Development</span></span>
           </a>
           <ul class="site-nav-menu" [class.menu-open]="menuOpen">
-            <li *ngFor="let link of navigation"><a class="site-nav-link" [class.nav-link-active]="activeNavId === link.id" [attr.aria-current]="activeNavId === link.id ? 'location' : null" [href]="'#' + link.id" (click)="activeNavId = link.id; menuOpen = false">{{ link.label }}</a></li>
+            <li *ngFor="let link of navigation"><a class="site-nav-link" [class.nav-link-active]="activeNavId === link.id" [attr.aria-current]="activeNavId === link.id ? 'location' : null" [href]="'#' + link.id" (click)="navigateToSection($event, link.id)">{{ link.label }}</a></li>
             <li><a href="#contact" (click)="menuOpen = false" class="site-nav-cta">Get a Quote <span aria-hidden="true">→</span></a></li>
           </ul>
           <button type="button" class="menu-toggle min-[721px]:hidden" (click)="menuOpen = !menuOpen" [attr.aria-expanded]="menuOpen" aria-label="Toggle menu">☰</button>
@@ -248,7 +248,27 @@ export class HomeComponent implements OnInit, OnDestroy {
       { id: 'pricing', label: 'Pricing' }, { id: 'faq', label: 'FAQ' }
     ];
     const availableIds = new Set(this.sections.map((section) => section.id));
-    this.navigation = links.filter((link) => availableIds.has(link.id));
+    const knownIds = new Set(links.map((link) => link.id));
+    this.navigation = [
+      ...links.filter((link) => availableIds.has(link.id)),
+      ...this.sections
+        .filter((section) => !knownIds.has(section.id) && section.id !== 'contact' && section.id !== 'newsletter')
+        .map((section) => ({ id: section.id, label: section.title }))
+    ];
+  }
+
+  navigateToSection(event: MouseEvent, id: string): void {
+    if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    const section = document.getElementById(id);
+    if (!section) return;
+    event.preventDefault();
+    this.activeNavId = id;
+    this.menuOpen = false;
+    if (window.location.hash !== `#${id}`) window.history.pushState(null, '', `#${id}`);
+    section.scrollIntoView({
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+      block: 'start'
+    });
   }
 
   ngOnInit(): void {

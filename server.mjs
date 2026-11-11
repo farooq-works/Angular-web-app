@@ -44,7 +44,13 @@ database.exec(`
   );
   CREATE TABLE IF NOT EXISTS admin_sessions (
     token_hash TEXT PRIMARY KEY,
-    expires_at INTEGER NOT NULL
+    expires_at INTEGER NOT NULL,
+    username TEXT NOT NULL DEFAULT ''
+  );
+  CREATE TABLE IF NOT EXISTS admin_users (
+    username TEXT PRIMARY KEY COLLATE NOCASE,
+    password_hash TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
   CREATE TABLE IF NOT EXISTS contact_messages (
     id INTEGER PRIMARY KEY,
@@ -59,6 +65,12 @@ database.exec(`
     created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
 `);
+
+const sessionColumns = database.pragma('table_info(admin_sessions)');
+if (!sessionColumns.some((column) => column.name === 'username')) {
+  database.exec("ALTER TABLE admin_sessions ADD COLUMN username TEXT NOT NULL DEFAULT ''");
+  database.prepare('UPDATE admin_sessions SET username = ? WHERE username = ?').run(username, '');
+}
 
 if (database.prepare('SELECT COUNT(*) AS count FROM sections').get().count === 0) {
   const insert = database.prepare(`
@@ -133,11 +145,19 @@ function requireAdmin(req, res, next) {
   if (!token || token.length > 128) {
     return res.status(401).json({ error: 'Sign in to manage website content.' });
   }
-  const session = database.prepare('SELECT expires_at FROM admin_sessions WHERE token_hash = ?').get(hashToken(token));
+  const session = database.prepare('SELECT username, expires_at FROM admin_sessions WHERE token_hash = ?').get(hashToken(token));
   if (!session || session.expires_at <= Date.now()) {
     if (session) database.prepare('DELETE FROM admin_sessions WHERE token_hash = ?').run(hashToken(token));
     res.setHeader('Set-Cookie', cookie('', 0));
     return res.status(401).json({ error: 'Your admin session has expired. Please sign in again.' });
+  }
+  req.adminUsername = session.username;
+  return next();
+}
+
+function requireOwner(req, res, next) {
+  if (req.adminUsername !== username) {
+    return res.status(403).json({ error: 'Only the primary administrator can manage dashboard users.' });
   }
   return next();
 }
@@ -195,18 +215,22 @@ app.get('/api/sections', (_req, res) => {
 
 app.post('/api/auth/login', loginLimiter, async (req, res, next) => {
   try {
-    const submittedUser = typeof req.body?.username === 'string' ? req.body.username : '';
+    const submittedUser = typeof req.body?.username === 'string' ? req.body.username.trim() : '';
     const submittedPassword = typeof req.body?.password === 'string' ? req.body.password : '';
-    const passwordMatches = await bcrypt.compare(submittedPassword, adminPasswordHash);
-    if (submittedUser !== username || !passwordMatches) {
+    const isOwner = submittedUser.toLowerCase() === username.toLowerCase();
+    const adminUser = isOwner ? null : database.prepare('SELECT username, password_hash AS passwordHash FROM admin_users WHERE username = ?').get(submittedUser.toLowerCase());
+    const passwordHash = isOwner ? adminPasswordHash : adminUser?.passwordHash ?? adminPasswordHash;
+    const passwordMatches = await bcrypt.compare(submittedPassword, passwordHash);
+    if ((!isOwner && !adminUser) || !passwordMatches) {
       return res.status(401).json({ error: 'Incorrect username or password.' });
     }
+    const authenticatedUsername = isOwner ? username : adminUser.username;
     const token = randomBytes(32).toString('hex');
     const expiresAt = Date.now() + 12 * 60 * 60 * 1000;
-    database.prepare('INSERT INTO admin_sessions (token_hash, expires_at) VALUES (?, ?)').run(hashToken(token), expiresAt);
+    database.prepare('INSERT INTO admin_sessions (token_hash, expires_at, username) VALUES (?, ?, ?)').run(hashToken(token), expiresAt, authenticatedUsername);
     database.prepare('DELETE FROM admin_sessions WHERE expires_at <= ?').run(Date.now());
     res.setHeader('Set-Cookie', cookie(token, 12 * 60 * 60));
-    return res.json({ username });
+    return res.json({ username: authenticatedUsername, isOwner });
   } catch (error) {
     return next(error);
   }
@@ -214,15 +238,15 @@ app.post('/api/auth/login', loginLimiter, async (req, res, next) => {
 
 app.get('/api/auth/me', (req, res) => {
   const token = readCookie(req.headers.cookie, 'mfd_admin');
-  if (!token || token.length > 128) return res.json({ username: null });
+  if (!token || token.length > 128) return res.json({ username: null, isOwner: false });
   const tokenHash = hashToken(token);
-  const session = database.prepare('SELECT expires_at FROM admin_sessions WHERE token_hash = ?').get(tokenHash);
+  const session = database.prepare('SELECT username, expires_at FROM admin_sessions WHERE token_hash = ?').get(tokenHash);
   if (!session || session.expires_at <= Date.now()) {
     if (session) database.prepare('DELETE FROM admin_sessions WHERE token_hash = ?').run(tokenHash);
     res.setHeader('Set-Cookie', cookie('', 0));
-    return res.json({ username: null });
+    return res.json({ username: null, isOwner: false });
   }
-  return res.json({ username });
+  return res.json({ username: session.username, isOwner: session.username === username });
 });
 
 app.post('/api/auth/logout', (req, res) => {
@@ -235,6 +259,52 @@ app.post('/api/auth/logout', (req, res) => {
 app.get('/api/admin/sections', requireAdmin, (_req, res) => {
   const rows = database.prepare(`${sectionSelect} ORDER BY sort_order, id`).all();
   res.json(rows.map(parseSection));
+});
+
+app.get('/api/admin/users', requireAdmin, requireOwner, (_req, res) => {
+  const users = database.prepare('SELECT username, created_at AS createdAt FROM admin_users ORDER BY username COLLATE NOCASE').all();
+  return res.json(users);
+});
+
+app.post('/api/admin/users', requireAdmin, requireOwner, async (req, res, next) => {
+  const submittedUsername = typeof req.body?.username === 'string' ? req.body.username.trim() : '';
+  const newPassword = typeof req.body?.password === 'string' ? req.body.password : '';
+  const normalizedUsername = submittedUsername.toLowerCase();
+  if (!/^[a-zA-Z0-9._-]{3,32}$/.test(submittedUsername)) {
+    return res.status(400).json({ error: 'Usernames must be 3–32 characters and contain only letters, numbers, dots, underscores, or hyphens.' });
+  }
+  if (normalizedUsername === username.toLowerCase()) {
+    return res.status(400).json({ error: 'The primary administrator account cannot be added as another user.' });
+  }
+  const passwordBytes = Buffer.byteLength(newPassword, 'utf8');
+  if (passwordBytes < 16 || passwordBytes > 72) {
+    return res.status(400).json({ error: 'Passwords must be between 16 and 72 bytes.' });
+  }
+  try {
+    const passwordHash = await bcrypt.hash(newPassword, 12);
+    database.prepare('INSERT INTO admin_users (username, password_hash) VALUES (?, ?)').run(normalizedUsername, passwordHash);
+    return res.status(201).json({ username: normalizedUsername });
+  } catch (error) {
+    if (error.code === 'SQLITE_CONSTRAINT_PRIMARYKEY' || error.code === 'SQLITE_CONSTRAINT_UNIQUE') {
+      return res.status(409).json({ error: 'That username already has dashboard access.' });
+    }
+    return next(error);
+  }
+});
+
+app.delete('/api/admin/users/:user', requireAdmin, requireOwner, (req, res) => {
+  const targetUsername = req.params.user.toLowerCase();
+  if (targetUsername === username.toLowerCase()) {
+    return res.status(400).json({ error: 'The primary administrator account cannot be removed.' });
+  }
+  const removeUser = database.transaction(() => {
+    const result = database.prepare('DELETE FROM admin_users WHERE username = ?').run(targetUsername);
+    if (!result.changes) return false;
+    database.prepare('DELETE FROM admin_sessions WHERE username = ?').run(targetUsername);
+    return true;
+  });
+  if (!removeUser()) return res.status(404).json({ error: 'That dashboard user no longer exists.' });
+  return res.status(204).end();
 });
 
 app.post('/api/admin/sections', requireAdmin, (req, res) => {

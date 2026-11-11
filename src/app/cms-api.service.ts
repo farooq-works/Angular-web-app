@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SiteSection } from './models';
+import { AdminUser, SiteSection } from './models';
 
 @Injectable({ providedIn: 'root' })
 export class CmsApiService {
@@ -15,12 +15,12 @@ export class CmsApiService {
     return this.http.get<SiteSection[]>('/api/admin/sections');
   }
 
-  login(username: string, password: string): Observable<{ username: string }> {
-    return this.http.post<{ username: string }>('/api/auth/login', { username, password });
+  login(username: string, password: string): Observable<{ username: string; isOwner: boolean }> {
+    return this.http.post<{ username: string; isOwner: boolean }>('/api/auth/login', { username, password });
   }
 
-  currentUser(): Observable<{ username: string | null }> {
-    return this.http.get<{ username: string | null }>('/api/auth/me');
+  currentUser(): Observable<{ username: string | null; isOwner: boolean }> {
+    return this.http.get<{ username: string | null; isOwner: boolean }>('/api/auth/me');
   }
 
   logout(): Observable<void> {
@@ -37,6 +37,18 @@ export class CmsApiService {
 
   deleteSection(id: string): Observable<void> {
     return this.http.delete<void>(`/api/admin/sections/${encodeURIComponent(id)}`);
+  }
+
+  getAdminUsers(): Observable<AdminUser[]> {
+    return this.http.get<AdminUser[]>('/api/admin/users');
+  }
+
+  createAdminUser(username: string, password: string): Observable<{ username: string }> {
+    return this.http.post<{ username: string }>('/api/admin/users', { username, password });
+  }
+
+  deleteAdminUser(username: string): Observable<void> {
+    return this.http.delete<void>(`/api/admin/users/${encodeURIComponent(username)}`);
   }
 
   sendContact(form: { name: string; email: string; message: string }): Observable<{ message: string }> {

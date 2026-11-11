@@ -43,3 +43,8 @@ export interface SiteSection {
   sortOrder: number;
   published: boolean;
 }
+
+export interface AdminUser {
+  username: string;
+  createdAt: string;
+}

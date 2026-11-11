@@ -3,7 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CmsApiService, getErrorMessage } from './cms-api.service';
-import { SectionContent, SiteSection } from './models';
+import { AdminUser, SectionContent, SiteSection } from './models';
 
 @Component({
   selector: 'app-admin',
@@ -33,7 +33,7 @@ import { SectionContent, SiteSection } from './models';
       <header class="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur">
         <div class="mx-auto flex max-w-[1500px] items-center justify-between gap-4 px-4 py-3 sm:px-7">
           <a routerLink="/" class="flex items-center gap-3 text-ink no-underline"><span class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-blue-500 to-violet-500 text-xs font-black text-white">MFD</span><span><strong class="block text-sm">Website CMS</strong><small class="text-xs text-slate-500">MFD Solutions</small></span></a>
-          <div class="flex items-center gap-2"><a routerLink="/" target="_blank" class="hidden rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium transition hover:bg-slate-50 sm:inline-flex">View website ↗</a><button type="button" (click)="logout()" class="rounded-lg border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-600 transition hover:border-rose-200 hover:text-rose-600">Sign out</button></div>
+          <div class="flex items-center gap-2"><span class="hidden text-sm text-slate-500 sm:inline">{{ currentUsername }}</span><a routerLink="/" target="_blank" class="hidden rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium transition hover:bg-slate-50 sm:inline-flex">View website ↗</a><button type="button" (click)="logout()" class="rounded-lg border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-600 transition hover:border-rose-200 hover:text-rose-600">Sign out</button></div>
         </div>
       </header>
 
@@ -43,6 +43,26 @@ import { SectionContent, SiteSection } from './models';
           <button type="button" (click)="addSection()" [disabled]="saving" class="rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 px-5 py-3 text-sm font-bold text-white shadow-glow transition hover:-translate-y-0.5 disabled:opacity-50">＋ Add new section</button>
         </div>
         <div *ngIf="notice" role="status" class="mb-5 rounded-xl border px-4 py-3 text-sm" [ngClass]="noticeIsError ? 'border-rose-200 bg-rose-50 text-rose-700' : 'border-emerald-200 bg-emerald-50 text-emerald-800'">{{ notice }}</div>
+        <section *ngIf="isOwner" class="mb-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div><p class="text-xs font-bold uppercase tracking-[.16em] text-blue-600">Access management</p><h2 class="mt-1 text-xl font-extrabold text-ink">Dashboard users</h2><p class="mt-1 text-sm text-slate-500">Add or remove accounts that can manage website content.</p></div>
+            <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">{{ adminUsers.length }} additional {{ adminUsers.length === 1 ? 'user' : 'users' }}</span>
+          </div>
+          <div *ngIf="usersNotice" role="status" class="mt-4 rounded-lg border px-4 py-3 text-sm" [ngClass]="usersNoticeIsError ? 'border-rose-200 bg-rose-50 text-rose-700' : 'border-emerald-200 bg-emerald-50 text-emerald-800'">{{ usersNotice }}</div>
+          <form (ngSubmit)="addAdminUser()" class="mt-5 grid items-end gap-4 sm:grid-cols-[1fr_1fr_auto]">
+            <label class="block text-sm font-semibold">Username<input name="newUsername" [(ngModel)]="newUsername" minlength="3" maxlength="32" pattern="[A-Za-z0-9._-]+" autocomplete="off" required class="mt-2 w-full rounded-lg border border-slate-200 px-3.5 py-2.5 font-normal outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" placeholder="colleague"></label>
+            <label class="block text-sm font-semibold">Temporary password<input name="newPassword" [(ngModel)]="newPassword" type="password" minlength="16" maxlength="72" autocomplete="new-password" required class="mt-2 w-full rounded-lg border border-slate-200 px-3.5 py-2.5 font-normal outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" placeholder="At least 16 characters"><small class="mt-1 block font-normal text-slate-500">Use a unique password (16–72 bytes) and share it privately.</small></label>
+            <button type="submit" [disabled]="userSaving" class="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-blue-700 disabled:opacity-50">{{ userSaving ? 'Saving…' : '＋ Add user' }}</button>
+          </form>
+          <div *ngIf="usersLoading" class="mt-5 text-sm text-slate-500">Loading dashboard users…</div>
+          <div *ngIf="!usersLoading && adminUsers.length" class="mt-5 divide-y divide-slate-100 rounded-xl border border-slate-100">
+            <div *ngFor="let user of adminUsers" class="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
+              <div><strong class="text-sm">{{ user.username }}</strong><p class="mt-0.5 text-xs text-slate-500">Added {{ user.createdAt | date:'mediumDate' }}</p></div>
+              <button type="button" (click)="removeAdminUser(user)" [disabled]="userSaving" class="rounded-lg border border-rose-200 px-3 py-2 text-sm font-semibold text-rose-600 transition hover:bg-rose-50 disabled:opacity-50">Remove access</button>
+            </div>
+          </div>
+          <p *ngIf="!usersLoading && !adminUsers.length" class="mt-5 rounded-xl bg-slate-50 px-4 py-3 text-sm text-slate-500">No additional dashboard users yet.</p>
+        </section>
         <div class="grid items-start gap-6 lg:grid-cols-[300px_minmax(0,1fr)]">
           <aside class="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
             <div class="flex items-center justify-between px-3 py-3"><h2 class="text-sm font-bold">All sections</h2><span class="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold">{{ sections.length }}</span></div>
@@ -89,6 +109,15 @@ export class AdminComponent implements OnInit {
   password = '';
   showPassword = false;
   errorMessage = '';
+  currentUsername = '';
+  isOwner = false;
+  adminUsers: AdminUser[] = [];
+  usersLoading = false;
+  userSaving = false;
+  newUsername = '';
+  newPassword = '';
+  usersNotice = '';
+  usersNoticeIsError = false;
   sections: SiteSection[] = [];
   selected: SiteSection | null = null;
   draft: SiteSection | null = null;
@@ -104,7 +133,10 @@ export class AdminComponent implements OnInit {
         this.checking = false;
         if (user.username) {
           this.authenticated = true;
+          this.currentUsername = user.username;
+          this.isOwner = user.isOwner;
           this.loadSections();
+          if (this.isOwner) this.loadAdminUsers();
         }
       },
       error: (error: unknown) => {
@@ -118,11 +150,14 @@ export class AdminComponent implements OnInit {
     this.errorMessage = '';
     this.loggingIn = true;
     this.api.login(this.username, this.password).subscribe({
-      next: () => {
+      next: (user) => {
         this.password = '';
         this.authenticated = true;
+        this.currentUsername = user.username;
+        this.isOwner = user.isOwner;
         this.loggingIn = false;
         this.loadSections();
+        if (this.isOwner) this.loadAdminUsers();
       },
       error: (error: unknown) => {
         this.errorMessage = getErrorMessage(error, 'Sign in failed. Please try again.');
@@ -149,6 +184,71 @@ export class AdminComponent implements OnInit {
           this.errorMessage = 'Your session expired. Please sign in again.';
         } else {
           this.setNotice(getErrorMessage(error, 'Could not load website sections.'), true);
+        }
+      }
+    });
+  }
+
+  loadAdminUsers(): void {
+    this.usersLoading = true;
+    this.api.getAdminUsers().subscribe({
+      next: (users) => {
+        this.adminUsers = users;
+        this.usersLoading = false;
+      },
+      error: (error: unknown) => {
+        this.usersLoading = false;
+        if (this.statusOf(error) === 401) {
+          this.authenticated = false;
+          this.errorMessage = 'Your session expired. Please sign in again.';
+        } else {
+          this.setUsersNotice(getErrorMessage(error, 'Could not load dashboard users.'), true);
+        }
+      }
+    });
+  }
+
+  addAdminUser(): void {
+    if (this.userSaving) return;
+    this.userSaving = true;
+    this.usersNotice = '';
+    this.api.createAdminUser(this.newUsername, this.newPassword).subscribe({
+      next: (user) => {
+        this.newUsername = '';
+        this.newPassword = '';
+        this.userSaving = false;
+        this.setUsersNotice(`Dashboard access added for ${user.username}. Share the password privately.`);
+        this.loadAdminUsers();
+      },
+      error: (error: unknown) => {
+        this.userSaving = false;
+        if (this.statusOf(error) === 401) {
+          this.authenticated = false;
+          this.errorMessage = 'Your session expired. Please sign in again.';
+        } else {
+          this.setUsersNotice(getErrorMessage(error, 'Could not add that dashboard user.'), true);
+        }
+      }
+    });
+  }
+
+  removeAdminUser(user: AdminUser): void {
+    if (this.userSaving || !window.confirm(`Remove dashboard access for "${user.username}"? Their active sessions will be signed out.`)) return;
+    this.userSaving = true;
+    this.usersNotice = '';
+    this.api.deleteAdminUser(user.username).subscribe({
+      next: () => {
+        this.adminUsers = this.adminUsers.filter((entry) => entry.username !== user.username);
+        this.userSaving = false;
+        this.setUsersNotice(`Dashboard access removed for ${user.username}.`);
+      },
+      error: (error: unknown) => {
+        this.userSaving = false;
+        if (this.statusOf(error) === 401) {
+          this.authenticated = false;
+          this.errorMessage = 'Your session expired. Please sign in again.';
+        } else {
+          this.setUsersNotice(getErrorMessage(error, 'Could not remove that dashboard user.'), true);
         }
       }
     });
@@ -287,6 +387,9 @@ export class AdminComponent implements OnInit {
     this.api.logout().subscribe({
       next: () => {
         this.authenticated = false;
+        this.currentUsername = '';
+        this.isOwner = false;
+        this.adminUsers = [];
         this.sections = [];
         this.selected = null;
       },
@@ -301,5 +404,10 @@ export class AdminComponent implements OnInit {
   private setNotice(message: string, isError = false): void {
     this.notice = message;
     this.noticeIsError = isError;
+  }
+
+  private setUsersNotice(message: string, isError = false): void {
+    this.usersNotice = message;
+    this.usersNoticeIsError = isError;
   }
 }
