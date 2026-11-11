@@ -39,6 +39,19 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "github-pages": {
+              "baseHref": "/Angular-web-app/",
+              "fileReplacements": [
+                {
+                  "replace": "src/app/app-config.ts",
+                  "with": "src/app/app-config.github-pages.ts"
+                },
+                {
+                  "replace": "src/main.ts",
+                  "with": "src/main.github-pages.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"

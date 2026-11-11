@@ -1,0 +1,839 @@
+[
+  {
+    "id": "home",
+    "title": "Complete IT Services for Modern Business",
+    "eyebrow": "MFD Solutions · Design & Development",
+    "description": "From web development and cloud infrastructure to cybersecurity and AI automation, technology that scales with your business.",
+    "kind": "hero",
+    "sortOrder": 0,
+    "content": {
+      "slides": [
+        {
+          "badge": "Full-Service IT Partner",
+          "title": "Complete IT Services",
+          "accent": "for Modern Business",
+          "description": "From web development, cloud infrastructure, and cybersecurity to AI automation — end-to-end technology solutions that scale with you.",
+          "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1920&q=85",
+          "primary": "Start a Project",
+          "secondary": "Explore Services",
+          "stats": [
+            {
+              "title": "Response time",
+              "value": "Under 24h"
+            },
+            {
+              "title": "Projects delivered",
+              "value": "120+"
+            },
+            {
+              "title": "Client satisfaction",
+              "value": "100%"
+            },
+            {
+              "title": "Support",
+              "value": "24/7 global"
+            }
+          ]
+        },
+        {
+          "badge": "Cybersecurity Excellence",
+          "title": "Protect Your Business",
+          "accent": "with Enterprise Security",
+          "description": "Security audits, threat detection, firewall setup, and compliance — keeping your data safe from modern cyber threats.",
+          "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=85",
+          "primary": "Get a Security Audit",
+          "secondary": "Learn More",
+          "stats": [
+            {
+              "title": "Threat protection",
+              "value": "99.9%"
+            },
+            {
+              "title": "Audits performed",
+              "value": "200+"
+            },
+            {
+              "title": "Compliance",
+              "value": "ISO / GDPR"
+            },
+            {
+              "title": "Monitoring",
+              "value": "24/7/365"
+            }
+          ]
+        },
+        {
+          "badge": "Cloud & DevOps",
+          "title": "Scale Faster with Cloud",
+          "accent": "Solutions That Work",
+          "description": "Migrate, optimize, and manage your infrastructure on AWS, Azure, and Google Cloud — with zero downtime and full control.",
+          "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=85",
+          "primary": "Migrate to Cloud",
+          "secondary": "See Case Studies",
+          "stats": [
+            {
+              "title": "Cost reduction",
+              "value": "Up to 60%"
+            },
+            {
+              "title": "Uptime SLA",
+              "value": "99.99%"
+            },
+            {
+              "title": "Platforms",
+              "value": "AWS / Azure / GCP"
+            },
+            {
+              "title": "Migrations",
+              "value": "50+ done"
+            }
+          ]
+        },
+        {
+          "badge": "Web & Mobile Development",
+          "title": "Beautiful Websites & Apps",
+          "accent": "Built to Perform",
+          "description": "Custom websites, web apps, and mobile apps designed for speed, SEO, and user delight. Built to convert, not just to look pretty.",
+          "image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1920&q=85",
+          "primary": "Build Your Site",
+          "secondary": "View Portfolio",
+          "stats": [
+            {
+              "title": "Websites built",
+              "value": "120+"
+            },
+            {
+              "title": "Mobile apps",
+              "value": "35+"
+            },
+            {
+              "title": "Page speed",
+              "value": "95+ / 100"
+            },
+            {
+              "title": "Technology",
+              "value": "Modern stack"
+            }
+          ]
+        },
+        {
+          "badge": "AI & Automation",
+          "title": "Automate Your Workflow",
+          "accent": "with AI Solutions",
+          "description": "Custom AI models, intelligent chatbots, and workflow automation that eliminate manual work and unlock new efficiencies.",
+          "image": "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1920&q=85",
+          "primary": "Explore AI",
+          "secondary": "Our Services",
+          "stats": [
+            {
+              "title": "Time saved",
+              "value": "40%+"
+            },
+            {
+              "title": "Custom models",
+              "value": "Built for you"
+            },
+            {
+              "title": "Integrations",
+              "value": "Seamless"
+            },
+            {
+              "title": "Support",
+              "value": "End-to-end"
+            }
+          ]
+        }
+      ]
+    },
+    "published": true
+  },
+  {
+    "id": "about",
+    "title": "Turning Ideas into Digital Reality",
+    "eyebrow": "About Myself",
+    "description": "I’m Mohammad Farooq Deen Mohammad — a professional with expertise in website development, graphic design, and content writing. With more than 12 years of experience, I’ve completed my Master’s and Bachelor’s degrees in Information Technology (MCA & BCA).",
+    "kind": "about",
+    "sortOrder": 1,
+    "content": {
+      "image": "/images/MF.jpg",
+      "imageAlt": "Mohammad Farooq — IT specialist",
+      "role": "Full stack Developer — Riyadh, Saudi Arabia",
+      "paragraphs": [
+        "I specialize in website and mobile UI/UX design and development, with a strong focus on user problems and genuine design solutions. I’ve worked on CRM systems, mobile apps, and web apps across multiple industries."
+      ],
+      "items": [
+        {
+          "title": "MCA — Master of Computer Application",
+          "icon": "🎓"
+        },
+        {
+          "title": "BCA — Bachelor of Computer Application",
+          "icon": "🎓"
+        },
+        {
+          "title": "Java Certification — CMC (TATA)",
+          "icon": "🏆"
+        },
+        {
+          "title": "Grade A++ Merit Diploma",
+          "icon": "⭐"
+        },
+        {
+          "title": "12+ years in website development & UI/UX design",
+          "icon": "✓"
+        },
+        {
+          "title": "Creative analytical thinker with strong troubleshooting skills",
+          "icon": "✓"
+        },
+        {
+          "title": "Good organization and attention to detail on every project",
+          "icon": "✓"
+        },
+        {
+          "title": "Senior Software Development Specialist at Maharah Human Resources, Riyadh",
+          "icon": "✓"
+        }
+      ],
+      "tags": [
+        "PHP",
+        ".NET",
+        "Node.js",
+        "React",
+        "Angular",
+        "Laravel",
+        "Vue.js",
+        "HTML5",
+        "JavaScript",
+        "CSS3",
+        "WordPress",
+        "Photoshop",
+        "Illustrator",
+        "Figma",
+        "Adobe XD",
+        "After Effects"
+      ]
+    },
+    "published": true
+  },
+  {
+    "id": "services",
+    "title": "Complete IT & Software Services",
+    "eyebrow": "What I Offer",
+    "description": "Twelve core service areas covering everything from strategy to support — all under one roof.",
+    "kind": "cards",
+    "sortOrder": 2,
+    "content": {
+      "items": [
+        {
+          "title": "Web Development",
+          "icon": "💻",
+          "description": "Custom, responsive websites and web apps built for speed, SEO, and conversions.",
+          "image": "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=800&q=85"
+        },
+        {
+          "title": "Cloud & Hosting",
+          "icon": "☁️",
+          "description": "Cloud setup, migration, and hosting on AWS, Azure, and Google Cloud.",
+          "image": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85"
+        },
+        {
+          "title": "Cybersecurity",
+          "icon": "🔒",
+          "description": "Security audits, malware removal, firewall setup, and threat protection.",
+          "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=85"
+        },
+        {
+          "title": "Technical Support",
+          "icon": "🛠️",
+          "description": "Remote and on-site IT support, troubleshooting, and maintenance.",
+          "image": "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=85"
+        },
+        {
+          "title": "Data & Analytics",
+          "icon": "📊",
+          "description": "Dashboards, reporting, and BI solutions that turn data into decisions.",
+          "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=85"
+        },
+        {
+          "title": "Automation & RPA",
+          "icon": "⚙️",
+          "description": "Workflow automation and robotic process automation to eliminate manual work.",
+          "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=85"
+        },
+        {
+          "title": "AI & Machine Learning",
+          "icon": "🤖",
+          "description": "Custom AI models, chatbots, and predictive analytics for smarter operations.",
+          "image": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800&q=85"
+        },
+        {
+          "title": "Mobile App Development",
+          "icon": "📱",
+          "description": "Native iOS, Android, and cross-platform apps that users love to open.",
+          "image": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=85"
+        },
+        {
+          "title": "UI/UX Design",
+          "icon": "🎨",
+          "description": "User research, wireframes, prototypes, and polished product design.",
+          "image": "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=85"
+        },
+        {
+          "title": "Graphic Design",
+          "icon": "🖌️",
+          "description": "Brand identities, marketing assets, and print-ready creative.",
+          "image": "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=85"
+        },
+        {
+          "title": "E-Commerce Solutions",
+          "icon": "🛒",
+          "description": "Online stores with secure payments, inventory, and conversion analytics.",
+          "image": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=85"
+        },
+        {
+          "title": "IT Consulting",
+          "icon": "💡",
+          "description": "Clear technology roadmaps and expert advice for your next stage of growth.",
+          "image": "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=800&q=85"
+        }
+      ]
+    },
+    "published": true
+  },
+  {
+    "id": "more-details",
+    "title": "Deep Dive Into Our Core Services",
+    "eyebrow": "What We Do Best",
+    "description": "A closer look at the design, engineering, and infrastructure work behind each successful project.",
+    "kind": "details",
+    "sortOrder": 3,
+    "content": {
+      "items": [
+        {
+          "title": "Custom Web Development",
+          "label": "Web Development",
+          "icon": "💻",
+          "image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=900&q=85",
+          "description": "We build fast, accessible websites and robust web applications around the needs of your business.",
+          "features": [
+            "Custom websites, portals, and SaaS applications",
+            "Responsive, accessible frontend experiences",
+            "API design, integration, and backend development",
+            "Search-friendly and performance-optimized delivery"
+          ]
+        },
+        {
+          "title": "Native & Cross-Platform Mobile Apps",
+          "label": "Mobile Apps",
+          "icon": "📱",
+          "image": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=900&q=85",
+          "description": "From concept to app store submission, we build apps for iOS and Android that feel at home on every device.",
+          "features": [
+            "Native iOS (Swift) & Android (Kotlin) apps",
+            "Cross-platform development (React Native, Flutter)",
+            "Mobile wireframes and user experience design",
+            "App Store and Google Play deployment"
+          ]
+        },
+        {
+          "title": "Scalable Cloud Infrastructure",
+          "label": "Cloud & DevOps",
+          "icon": "☁️",
+          "image": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=900&q=85",
+          "description": "Migrate to the cloud, optimize infrastructure, and streamline software delivery with modern DevOps.",
+          "features": [
+            "Cloud architecture (AWS, Azure, GCP)",
+            "CI/CD pipeline setup and automation",
+            "Containers with Docker and Kubernetes",
+            "Monitoring, cost optimization, and microservices"
+          ]
+        },
+        {
+          "title": "User-Centered UI/UX Design",
+          "label": "UI/UX Design",
+          "icon": "🎨",
+          "image": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=900&q=85",
+          "description": "Great design solves user problems. We create intuitive, tested interfaces that help people get things done.",
+          "features": [
+            "User research and persona development",
+            "Wireframing and interactive Figma prototypes",
+            "Design systems and component libraries",
+            "Usability testing and accessible design"
+          ]
+        }
+      ]
+    },
+    "published": true
+  },
+  {
+    "id": "why-us",
+    "title": "Why Businesses Choose Us",
+    "eyebrow": "Why MFD Solutions",
+    "description": "Six reasons clients keep coming back — and why you should too.",
+    "kind": "cards",
+    "sortOrder": 4,
+    "content": {
+      "items": [
+        {
+          "title": "Fast Delivery",
+          "icon": "⚡",
+          "description": "We ship fast without sacrificing quality — most projects go live within weeks, not months."
+        },
+        {
+          "title": "Precise Execution",
+          "icon": "🎯",
+          "description": "Every pixel, every line of code, every milestone is planned and delivered exactly as agreed."
+        },
+        {
+          "title": "Secure by Default",
+          "icon": "🛡️",
+          "description": "Security is built in from day one — not bolted on later. Your data and users stay protected."
+        },
+        {
+          "title": "Scalable Solutions",
+          "icon": "📈",
+          "description": "Built to grow with you. Our architecture handles traffic, data, and users from day one to year ten."
+        },
+        {
+          "title": "Long-Term Partners",
+          "icon": "🤝",
+          "description": "We don’t disappear after delivery. Most clients stay with us for years of maintenance and growth."
+        },
+        {
+          "title": "Premium Quality",
+          "icon": "💎",
+          "description": "12+ years of experience. Every project is crafted with the care of a specialist studio."
+        }
+      ]
+    },
+    "published": true
+  },
+  {
+    "id": "tech-stack",
+    "title": "Our Tech Stack",
+    "eyebrow": "Technologies We Use",
+    "description": "Modern, battle-tested technologies that power reliable, fast, and scalable solutions.",
+    "kind": "technologies",
+    "sortOrder": 5,
+    "content": {
+      "items": [
+        {
+          "title": "React",
+          "icon": "⚛️"
+        },
+        {
+          "title": "Node.js",
+          "icon": "🟢"
+        },
+        {
+          "title": "PHP",
+          "icon": "🐘"
+        },
+        {
+          "title": "Angular",
+          "icon": "🅰️"
+        },
+        {
+          "title": "Vue.js",
+          "icon": "💚"
+        },
+        {
+          "title": "Figma",
+          "icon": "🎨"
+        },
+        {
+          "title": "AWS",
+          "icon": "☁️"
+        },
+        {
+          "title": "Azure",
+          "icon": "🔷"
+        },
+        {
+          "title": "Docker",
+          "icon": "🐳"
+        },
+        {
+          "title": "Flutter",
+          "icon": "📱"
+        },
+        {
+          "title": "Laravel",
+          "icon": "🔺"
+        },
+        {
+          "title": "WordPress",
+          "icon": "📰"
+        }
+      ]
+    },
+    "published": true
+  },
+  {
+    "id": "stats",
+    "title": "Trusted Experience, Real Results",
+    "eyebrow": "By The Numbers",
+    "description": "A track record built on long-term relationships, reliable delivery, and measurable outcomes.",
+    "kind": "stats",
+    "sortOrder": 6,
+    "content": {
+      "items": [
+        {
+          "title": "Projects Delivered",
+          "value": "250+"
+        },
+        {
+          "title": "Happy Clients",
+          "value": "180+"
+        },
+        {
+          "title": "Years of Experience",
+          "value": "12+"
+        },
+        {
+          "title": "Client Satisfaction",
+          "value": "100%"
+        }
+      ]
+    },
+    "published": true
+  },
+  {
+    "id": "process",
+    "title": "My Simple 4-Step Process",
+    "eyebrow": "How We Work",
+    "description": "A clear, collaborative process that turns your idea into a successful launch.",
+    "kind": "process",
+    "sortOrder": 7,
+    "content": {
+      "items": [
+        {
+          "title": "Discovery",
+          "icon": "🔍",
+          "description": "We learn about your business, goals, and users — then define exactly what success looks like."
+        },
+        {
+          "title": "Plan & Design",
+          "icon": "📐",
+          "description": "I map out the solution, timeline, and cost — nothing hidden, everything clear."
+        },
+        {
+          "title": "Build",
+          "icon": "⚡",
+          "description": "Development, testing, and iteration with regular updates and check-ins."
+        },
+        {
+          "title": "Launch & Support",
+          "icon": "🚀",
+          "description": "Go live, measure results, and get ongoing support whenever you need it."
+        }
+      ]
+    },
+    "published": true
+  },
+  {
+    "id": "portfolio",
+    "title": "Projects I’m Proud Of",
+    "eyebrow": "Recent Work",
+    "description": "A snapshot of recent IT, web, design, and Figma UI/UX projects — also viewable on Behance.",
+    "kind": "portfolio",
+    "sortOrder": 8,
+    "content": {
+      "items": [
+        {
+          "title": "E-Commerce Platform",
+          "label": "Web Dev",
+          "description": "Full-stack shop with payments and analytics",
+          "image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=900&q=85",
+          "href": "https://www.behance.net/Farooq127"
+        },
+        {
+          "title": "Figma Design System",
+          "label": "Figma UI/UX",
+          "description": "Complete UI kit with components and auto-layout",
+          "image": "https://images.unsplash.com/photo-1618788372246-79faff0c3742?auto=format&fit=crop&w=900&q=85",
+          "href": "https://www.figma.com/"
+        },
+        {
+          "title": "Mobile UI/UX Design",
+          "label": "Mobile App",
+          "description": "iOS & Android app with wearable sync",
+          "image": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=900&q=85",
+          "href": "https://www.behance.net/Farooq127"
+        },
+        {
+          "title": "Interactive Prototype",
+          "label": "Figma Prototype",
+          "description": "Clickable Figma prototype with smart animations",
+          "image": "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=900&q=85",
+          "href": "https://www.figma.com/"
+        },
+        {
+          "title": "CRM Dashboard",
+          "label": "Web App",
+          "description": "Real-time analytics for enterprise users",
+          "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=85",
+          "href": "https://www.behance.net/Farooq127"
+        },
+        {
+          "title": "Figma Mobile UI Kit",
+          "label": "Figma Mobile",
+          "description": "Reusable components and design tokens",
+          "image": "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=900&q=85",
+          "href": "https://www.figma.com/"
+        }
+      ]
+    },
+    "published": true
+  },
+  {
+    "id": "guarantee",
+    "title": "100% Satisfaction, Or Your Money Back",
+    "eyebrow": "Our Guarantee",
+    "description": "We don’t just promise quality — we guarantee it. Every project we deliver is backed by a written commitment that protects your investment.",
+    "kind": "guarantee",
+    "sortOrder": 9,
+    "content": {
+      "items": [
+        {
+          "title": "100% money-back guarantee within 30 days",
+          "icon": "🛡️"
+        },
+        {
+          "title": "Free revisions until you are fully satisfied",
+          "icon": "✓"
+        },
+        {
+          "title": "Lifetime bug-fix warranty on all delivered code",
+          "icon": "✓"
+        },
+        {
+          "title": "Secure, encrypted communication on every project",
+          "icon": "✓"
+        },
+        {
+          "title": "Signed NDA available for sensitive work",
+          "icon": "✓"
+        }
+      ],
+      "cardTitle": "MFD Trust Guarantee",
+      "cardDescription": "Every client is protected by our full-service guarantee — so you can focus on your business while we handle the technology."
+    },
+    "published": true
+  },
+  {
+    "id": "global-presence",
+    "title": "Serving Clients Worldwide",
+    "eyebrow": "Global Presence",
+    "description": "Based in Riyadh, Saudi Arabia — delivering projects across the globe, on time and on budget.",
+    "kind": "cards",
+    "sortOrder": 10,
+    "content": {
+      "items": [
+        {
+          "title": "Saudi Arabia",
+          "icon": "🇸🇦",
+          "description": "Riyadh · Headquarters"
+        },
+        {
+          "title": "North America",
+          "icon": "🇺🇸",
+          "description": "Remote project delivery"
+        },
+        {
+          "title": "Europe",
+          "icon": "🇪🇺",
+          "description": "Remote project delivery"
+        },
+        {
+          "title": "Asia Pacific",
+          "icon": "🌏",
+          "description": "Remote project delivery"
+        }
+      ]
+    },
+    "published": true
+  },
+  {
+    "id": "newsletter",
+    "title": "Stay Updated With MFD Solutions",
+    "eyebrow": "The MFD Newsletter",
+    "description": "Get practical technology tips, project updates, and occasional offers — straight to your inbox.",
+    "kind": "newsletter",
+    "sortOrder": 11,
+    "content": {
+      "items": []
+    },
+    "published": true
+  },
+  {
+    "id": "pricing",
+    "title": "Simple, Transparent Pricing",
+    "eyebrow": "Pricing & Offers",
+    "description": "Choose a plan that fits your needs. All plans include dedicated support and clear deliverables.",
+    "kind": "pricing",
+    "sortOrder": 12,
+    "content": {
+      "items": [
+        {
+          "title": "Starter",
+          "label": "Perfect for small projects",
+          "icon": "🚀",
+          "price": "$499",
+          "description": "A confident start for your next web project.",
+          "features": [
+            "Up to 5 responsive pages",
+            "Mobile-friendly design",
+            "Contact form integration",
+            "Basic SEO setup",
+            "30 days support"
+          ]
+        },
+        {
+          "title": "Professional",
+          "label": "For growing businesses",
+          "icon": "💼",
+          "price": "$1,599",
+          "description": "A polished digital presence ready to scale.",
+          "features": [
+            "Up to 15 custom pages",
+            "CMS integration",
+            "E-commerce ready",
+            "Advanced SEO & analytics",
+            "Figma UI/UX design",
+            "90 days support"
+          ],
+          "featured": true
+        },
+        {
+          "title": "Enterprise",
+          "label": "For large-scale needs",
+          "icon": "👑",
+          "price": "$5,999",
+          "description": "Custom systems, integrations, and long-term support.",
+          "features": [
+            "Unlimited pages & features",
+            "Custom web application",
+            "Mobile app (iOS + Android)",
+            "Cloud deployment & DevOps",
+            "Priority support",
+            "1 year maintenance"
+          ]
+        }
+      ],
+      "offerTitle": "Get 30% OFF on your first project!",
+      "offerDescription": "New clients get 30% off any plan, plus a free consultation and Figma design mockup."
+    },
+    "published": true
+  },
+  {
+    "id": "testimonials",
+    "title": "What Clients Say",
+    "eyebrow": "Testimonials",
+    "description": "Real feedback from businesses I’ve had the pleasure to work with.",
+    "kind": "testimonials",
+    "sortOrder": 13,
+    "content": {
+      "items": [
+        {
+          "title": "“Mohammad rebuilt our entire web platform in 6 weeks. Performance doubled and our conversion rate jumped 40%. Absolutely outstanding work.”",
+          "person": "James Wilson",
+          "role": "CEO, TechRetail",
+          "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=85"
+        },
+        {
+          "title": "“The cloud migration was flawless. Zero downtime and our infrastructure costs dropped by more than half. Highly recommended.”",
+          "person": "Priya Sharma",
+          "role": "CTO, FinEdge",
+          "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=85"
+        },
+        {
+          "title": "“Fast, professional, and always available. Our security audit uncovered issues we didn’t know existed. Worth every penny.”",
+          "person": "David Martinez",
+          "role": "Founder, SecureFlow",
+          "image": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=85"
+        },
+        {
+          "title": "“The Figma prototypes were incredibly detailed. Our stakeholders could visualize the final product before a single line of code was written.”",
+          "person": "Fatima Al-Hassan",
+          "role": "Product Manager, InnovateME",
+          "image": "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=85"
+        },
+        {
+          "title": "“Working with Mohammad was a game-changer for our startup. He delivered our mobile app on time and within budget.”",
+          "person": "Omar Khalid",
+          "role": "Co-Founder, SwiftPay",
+          "image": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=85"
+        }
+      ]
+    },
+    "published": true
+  },
+  {
+    "id": "faq",
+    "title": "Frequently Asked Questions",
+    "eyebrow": "FAQ",
+    "description": "A few quick answers about the way we work, what we deliver, and how to get started.",
+    "kind": "faq",
+    "sortOrder": 14,
+    "content": {
+      "items": [
+        {
+          "title": "What services does MFD Solutions offer?",
+          "answer": "We provide web and mobile app development, UI/UX and graphic design, cloud infrastructure, cybersecurity, AI and automation, e-commerce, and ongoing IT support."
+        },
+        {
+          "title": "How does a project get started?",
+          "answer": "Start with a conversation about your goals. We’ll clarify the scope, recommend an approach, and share a clear timeline and estimate before work begins."
+        },
+        {
+          "title": "How much does a project cost?",
+          "answer": "Pricing depends on the scope and requirements. The example plans on this page start at $499; custom work is quoted after an initial consultation."
+        },
+        {
+          "title": "Do you provide support after launch?",
+          "answer": "Yes. Support and maintenance are available after delivery, and each project includes the support period set out in its proposal."
+        },
+        {
+          "title": "Can you work with clients outside Saudi Arabia?",
+          "answer": "Yes. Based in Riyadh, Saudi Arabia, MFD Solutions delivers projects remotely to clients worldwide."
+        },
+        {
+          "title": "How do I request a quote?",
+          "answer": "Send a note using the contact form and include a few details about your project. We’ll follow up to discuss next steps."
+        }
+      ]
+    },
+    "published": true
+  },
+  {
+    "id": "contact",
+    "title": "Let’s Build Something Great Together",
+    "eyebrow": "Start a Conversation",
+    "description": "Tell me a little about your project and I’ll get back to you within one business day.",
+    "kind": "contact",
+    "sortOrder": 15,
+    "content": {
+      "items": [
+        {
+          "title": "WhatsApp",
+          "value": "+966 57 084 9844",
+          "icon": "💬",
+          "href": "https://wa.me/966570849844"
+        },
+        {
+          "title": "Location",
+          "value": "Riyadh, Saudi Arabia",
+          "icon": "📍"
+        },
+        {
+          "title": "Availability",
+          "value": "Worldwide · Remote friendly",
+          "icon": "🌍"
+        }
+      ]
+    },
+    "published": true
+  }
+]

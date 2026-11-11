@@ -3,6 +3,8 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CmsApiService, getErrorMessage } from './cms-api.service';
+import { appConfig } from './app-config';
+import defaultSections from './default-sections.json';
 import { ContentItem, HeroSlide, SiteSection } from './models';
 
 @Component({
@@ -32,7 +34,7 @@ import { ContentItem, HeroSlide, SiteSection } from './models';
         </nav>
       </header>
 
-      <main>
+      <main [class.static-site]="staticSite">
       <ng-container *ngFor="let section of sections">
         <section *ngIf="section.kind === 'hero'" [id]="section.id" class="hero-carousel relative isolate h-[92vh] min-h-[640px] overflow-hidden bg-slate-950 text-white max-[900px]:h-auto max-[900px]:min-h-[700px]">
           <ng-container *ngIf="section.content.slides?.length">
@@ -212,6 +214,7 @@ import { ContentItem, HeroSlide, SiteSection } from './models';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private readonly api = inject(CmsApiService);
+  readonly staticSite = appConfig.githubPages;
   readonly currentYear = new Date().getFullYear();
   navigation: { id: string; label: string }[] = [];
   sections: SiteSection[] = [];
@@ -270,6 +273,18 @@ export class HomeComponent implements OnInit, OnDestroy {
   load(): void {
     this.loading = true;
     this.loadError = '';
+    if (this.staticSite) {
+      this.sections = defaultSections.map((section) => {
+        const image = section.content['image'];
+        return typeof image === 'string' && image.startsWith('/')
+          ? { ...section, content: { ...section.content, image: new URL(image.slice(1), document.baseURI).toString() } }
+          : section;
+      });
+      this.updateNavigation();
+      this.loading = false;
+      return;
+    }
+
     this.api.getPublicSections().subscribe({
       next: (sections) => {
         this.sections = sections;

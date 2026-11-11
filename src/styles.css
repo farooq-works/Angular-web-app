@@ -694,3 +694,12 @@
     transition-duration: 0.01ms !important;
   }
 }
+/* GitHub Pages is static-only: suppress forms that require the Express API. */
+.static-site #contact form,
+.static-site #newsletter {
+  display: none;
+}
+
+.static-site a[href="/admin"] {
+  display: none;
+}

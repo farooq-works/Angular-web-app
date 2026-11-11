@@ -12,17 +12,20 @@ import { defaultSections } from './server/default-sections.mjs';
 const root = dirname(fileURLToPath(import.meta.url));
 const port = Number(process.env.PORT ?? 3000);
 const production = process.env.NODE_ENV === 'production';
-const username = process.env.ADMIN_USERNAME ?? 'farooq';
-const password = process.env.ADMIN_PASSWORD ?? 'farooq123';
-const adminPasswordHash = bcrypt.hashSync(password, 10);
+const username = process.env.ADMIN_USERNAME?.trim() ?? '';
+const password = process.env.ADMIN_PASSWORD ?? '';
 const databasePath = resolve(process.env.DATABASE_PATH ?? join(root, 'data', 'mfd-solutions.sqlite'));
 
-if (production && (!process.env.ADMIN_USERNAME || !process.env.ADMIN_PASSWORD || password === 'farooq123')) {
-  throw new Error('Set a unique ADMIN_USERNAME and ADMIN_PASSWORD in the production environment before starting the server.');
+if (username.length < 3) {
+  throw new Error('Set ADMIN_USERNAME to a unique username of at least 3 characters.');
+}
+if (password.length < 16) {
+  throw new Error('Set ADMIN_PASSWORD to a unique password of at least 16 characters.');
 }
 if (!Number.isInteger(port) || port < 1 || port > 65535) {
   throw new Error('PORT must be an integer between 1 and 65535.');
 }
+const adminPasswordHash = bcrypt.hashSync(password, 12);
 
 mkdirSync(dirname(databasePath), { recursive: true });
 const database = new Database(databasePath);
@@ -313,5 +316,4 @@ app.use((error, _req, res, _next) => {
 
 app.listen(port, () => {
   console.log(`MFD Solutions API listening on http://localhost:${port}`);
-  if (!production) console.log('Development admin login: farooq / farooq123');
 });
