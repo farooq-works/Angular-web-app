@@ -248,13 +248,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       { id: 'pricing', label: 'Pricing' }, { id: 'faq', label: 'FAQ' }
     ];
     const availableIds = new Set(this.sections.map((section) => section.id));
-    const knownIds = new Set(links.map((link) => link.id));
-    this.navigation = [
-      ...links.filter((link) => availableIds.has(link.id)),
-      ...this.sections
-        .filter((section) => !knownIds.has(section.id) && section.id !== 'contact' && section.id !== 'newsletter')
-        .map((section) => ({ id: section.id, label: section.title }))
-    ];
+    this.navigation = links.filter((link) => availableIds.has(link.id));
   }
 
   navigateToSection(event: MouseEvent, id: string): void {

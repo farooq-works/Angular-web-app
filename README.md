@@ -35,7 +35,7 @@ Set unique `ADMIN_USERNAME` and `ADMIN_PASSWORD` values in `.env` before startin
 npm.cmd run dev
 ```
 
-Open [http://localhost:4200](http://localhost:4200) for the website and [http://localhost:4200/admin](http://localhost:4200/admin) for the CMS. The API starts on port 3000 and creates `data/mfd-solutions.sqlite` on first run. It stores edited sections, contact messages, and newsletter subscriptions.
+Open [http://localhost:4200](http://localhost:4200) for the website and [http://localhost:4200/admin](http://localhost:4200/admin) for the CMS. The API starts on port 3000; its root returns service status and `/api/health` provides a health check. It creates `data/mfd-solutions.sqlite` on first run and stores edited sections, contact messages, and newsletter subscriptions.
 
 ## Self-hosted production
 

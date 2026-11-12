@@ -206,6 +206,8 @@ function validEmail(value) {
   return typeof value === 'string' && value.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
+app.get('/', (_req, res) => res.json({ service: 'MFD Solutions API', status: 'ok', health: '/api/health' }));
+
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }));
 
 app.get('/api/sections', (_req, res) => {
