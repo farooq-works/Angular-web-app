@@ -47,6 +47,10 @@ export class CmsApiService {
     return this.http.post<{ username: string }>('/api/admin/users', { username, password });
   }
 
+  resetAdminUserPassword(username: string, password: string): Observable<{ username: string }> {
+    return this.http.put<{ username: string }>(`/api/admin/users/${encodeURIComponent(username)}/password`, { password });
+  }
+
   deleteAdminUser(username: string): Observable<void> {
     return this.http.delete<void>(`/api/admin/users/${encodeURIComponent(username)}`);
   }

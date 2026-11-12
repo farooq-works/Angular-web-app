@@ -29,7 +29,7 @@ npm.cmd ci
 Copy-Item .env.example .env
 ```
 
-Set unique `ADMIN_USERNAME` and `ADMIN_PASSWORD` values in `.env` before starting the server. The password must be at least 16 characters; generate a random one and keep it out of source control. The primary administrator can add and revoke other dashboard accounts under **Dashboard users** after signing in. Additional accounts also require a unique password of at least 16 characters. Then run:
+Set unique `ADMIN_USERNAME` and `ADMIN_PASSWORD` values in `.env` before starting the server. The password must be at least 16 characters; generate a random one and keep it out of source control. The primary administrator can add, reset passwords for, and revoke other dashboard accounts under **Dashboard users** after signing in. Passwords are stored as hashes; a reset password is shown only once so it can be shared privately. Additional accounts also require a unique password of at least 16 characters. Then run:
 
 ```powershell
 npm.cmd run dev

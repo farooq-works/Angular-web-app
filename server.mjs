@@ -292,6 +292,31 @@ app.post('/api/admin/users', requireAdmin, requireOwner, async (req, res, next) 
   }
 });
 
+app.put('/api/admin/users/:user/password', requireAdmin, requireOwner, async (req, res, next) => {
+  const targetUsername = req.params.user.toLowerCase();
+  if (targetUsername === username.toLowerCase()) {
+    return res.status(400).json({ error: 'The primary administrator password must be changed through the server environment.' });
+  }
+  const newPassword = typeof req.body?.password === 'string' ? req.body.password : '';
+  const passwordBytes = Buffer.byteLength(newPassword, 'utf8');
+  if (passwordBytes < 16 || passwordBytes > 72) {
+    return res.status(400).json({ error: 'Passwords must be between 16 and 72 bytes.' });
+  }
+  try {
+    const passwordHash = await bcrypt.hash(newPassword, 12);
+    const resetUser = database.transaction(() => {
+      const result = database.prepare('UPDATE admin_users SET password_hash = ? WHERE username = ?').run(passwordHash, targetUsername);
+      if (!result.changes) return false;
+      database.prepare('DELETE FROM admin_sessions WHERE username = ?').run(targetUsername);
+      return true;
+    });
+    if (!resetUser()) return res.status(404).json({ error: 'That dashboard user no longer exists.' });
+    return res.json({ username: targetUsername });
+  } catch (error) {
+    return next(error);
+  }
+});
+
 app.delete('/api/admin/users/:user', requireAdmin, requireOwner, (req, res) => {
   const targetUsername = req.params.user.toLowerCase();
   if (targetUsername === username.toLowerCase()) {

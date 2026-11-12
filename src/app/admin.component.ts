@@ -56,9 +56,25 @@ import { AdminUser, SectionContent, SiteSection } from './models';
           </form>
           <div *ngIf="usersLoading" class="mt-5 text-sm text-slate-500">Loading dashboard users…</div>
           <div *ngIf="!usersLoading && adminUsers.length" class="mt-5 divide-y divide-slate-100 rounded-xl border border-slate-100">
-            <div *ngFor="let user of adminUsers" class="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
-              <div><strong class="text-sm">{{ user.username }}</strong><p class="mt-0.5 text-xs text-slate-500">Added {{ user.createdAt | date:'mediumDate' }}</p></div>
-              <button type="button" (click)="removeAdminUser(user)" [disabled]="userSaving" class="rounded-lg border border-rose-200 px-3 py-2 text-sm font-semibold text-rose-600 transition hover:bg-rose-50 disabled:opacity-50">Remove access</button>
+            <div *ngFor="let user of adminUsers" class="px-4 py-3">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div><strong class="text-sm">{{ user.username }}</strong><p class="mt-0.5 text-xs text-slate-500">Added {{ user.createdAt | date:'mediumDate' }}</p></div>
+                <div class="flex flex-wrap gap-2">
+                  <button type="button" (click)="startPasswordReset(user)" [disabled]="userSaving" class="rounded-lg border border-blue-200 px-3 py-2 text-sm font-semibold text-blue-700 transition hover:bg-blue-50 disabled:opacity-50">Reset password</button>
+                  <button type="button" (click)="removeAdminUser(user)" [disabled]="userSaving" class="rounded-lg border border-rose-200 px-3 py-2 text-sm font-semibold text-rose-600 transition hover:bg-rose-50 disabled:opacity-50">Remove access</button>
+                </div>
+              </div>
+              <form *ngIf="passwordResetUsername === user.username" (ngSubmit)="resetAdminUserPassword(user)" class="mt-3 flex flex-wrap items-end gap-3 rounded-lg bg-slate-50 p-3">
+                <label class="min-w-60 flex-1 text-sm font-semibold">New password<input [name]="'resetPassword-' + user.username" [(ngModel)]="passwordResetValue" type="password" minlength="16" maxlength="72" autocomplete="new-password" required class="mt-2 w-full rounded-lg border border-slate-200 px-3.5 py-2.5 font-normal outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" placeholder="At least 16 characters"></label>
+                <button type="submit" [disabled]="userSaving" class="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-blue-700 disabled:opacity-50">{{ userSaving ? 'Saving…' : 'Set new password' }}</button>
+                <button type="button" (click)="cancelPasswordReset()" [disabled]="userSaving" class="rounded-lg border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600 disabled:opacity-50">Cancel</button>
+                <p class="w-full text-xs text-slate-500">Use a unique password (16–72 bytes). The user’s active sessions will be signed out.</p>
+              </form>
+              <div *ngIf="resetPasswordResult?.username === user.username" role="status" class="mt-3 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-800">
+                <p>Password reset. Share this new password privately; it cannot be retrieved again.</p>
+                <p class="mt-1 break-all font-mono">{{ resetPasswordResult?.password }}</p>
+                <button type="button" (click)="dismissResetPasswordResult()" class="mt-2 text-xs font-semibold underline">Hide password</button>
+              </div>
             </div>
           </div>
           <p *ngIf="!usersLoading && !adminUsers.length" class="mt-5 rounded-xl bg-slate-50 px-4 py-3 text-sm text-slate-500">No additional dashboard users yet.</p>
@@ -116,6 +132,9 @@ export class AdminComponent implements OnInit {
   userSaving = false;
   newUsername = '';
   newPassword = '';
+  passwordResetUsername: string | null = null;
+  passwordResetValue = '';
+  resetPasswordResult: { username: string; password: string } | null = null;
   usersNotice = '';
   usersNoticeIsError = false;
   sections: SiteSection[] = [];
@@ -239,6 +258,8 @@ export class AdminComponent implements OnInit {
     this.api.deleteAdminUser(user.username).subscribe({
       next: () => {
         this.adminUsers = this.adminUsers.filter((entry) => entry.username !== user.username);
+        if (this.passwordResetUsername === user.username) this.cancelPasswordReset();
+        if (this.resetPasswordResult?.username === user.username) this.dismissResetPasswordResult();
         this.userSaving = false;
         this.setUsersNotice(`Dashboard access removed for ${user.username}.`);
       },
@@ -252,6 +273,45 @@ export class AdminComponent implements OnInit {
         }
       }
     });
+  }
+
+  startPasswordReset(user: AdminUser): void {
+    this.passwordResetUsername = user.username;
+    this.passwordResetValue = '';
+    this.resetPasswordResult = null;
+    this.usersNotice = '';
+  }
+
+  cancelPasswordReset(): void {
+    this.passwordResetUsername = null;
+    this.passwordResetValue = '';
+  }
+
+  resetAdminUserPassword(user: AdminUser): void {
+    if (this.userSaving || this.passwordResetUsername !== user.username) return;
+    this.userSaving = true;
+    this.usersNotice = '';
+    this.api.resetAdminUserPassword(user.username, this.passwordResetValue).subscribe({
+      next: () => {
+        this.resetPasswordResult = { username: user.username, password: this.passwordResetValue };
+        this.cancelPasswordReset();
+        this.userSaving = false;
+        this.setUsersNotice(`Password reset for ${user.username}. Their active sessions were signed out.`);
+      },
+      error: (error: unknown) => {
+        this.userSaving = false;
+        if (this.statusOf(error) === 401) {
+          this.authenticated = false;
+          this.errorMessage = 'Your session expired. Please sign in again.';
+        } else {
+          this.setUsersNotice(getErrorMessage(error, 'Could not reset that dashboard user’s password.'), true);
+        }
+      }
+    });
+  }
+
+  dismissResetPasswordResult(): void {
+    this.resetPasswordResult = null;
   }
 
   selectSection(section: SiteSection): void {
@@ -390,6 +450,8 @@ export class AdminComponent implements OnInit {
         this.currentUsername = '';
         this.isOwner = false;
         this.adminUsers = [];
+        this.cancelPasswordReset();
+        this.dismissResetPasswordResult();
         this.sections = [];
         this.selected = null;
       },
